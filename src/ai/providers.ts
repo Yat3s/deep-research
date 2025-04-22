@@ -9,41 +9,45 @@ import { getEncoding } from 'js-tiktoken';
 
 import { RecursiveCharacterTextSplitter } from './text-splitter';
 
+const FEEDBACK_MODEL = 'gpt-4.1';
+
+
 // Providers
 const openai = process.env.OPENAI_KEY
   ? createOpenAI({
-      apiKey: process.env.OPENAI_KEY,
-      baseURL: process.env.OPENAI_ENDPOINT || 'https://api.openai.com/v1',
-    })
+    apiKey: process.env.OPENAI_KEY,
+    baseURL: process.env.OPENAI_ENDPOINT || 'https://api.openai.com/v1',
+  })
   : undefined;
+
+export const generateFeedbackModel = openai?.(FEEDBACK_MODEL, {
+  structuredOutputs: true,
+}) as LanguageModelV1;
+
 
 const fireworks = process.env.FIREWORKS_KEY
   ? createFireworks({
-      apiKey: process.env.FIREWORKS_KEY,
-    })
+    apiKey: process.env.FIREWORKS_KEY,
+  })
   : undefined;
 
 const customModel = process.env.CUSTOM_MODEL
   ? openai?.(process.env.CUSTOM_MODEL, {
-      structuredOutputs: true,
-    })
+    structuredOutputs: false,
+  })
   : undefined;
 
 // Models
 
-const o3MiniModel = openai?.('o3-mini', {
+const o3MiniModel = openai?.('o4-mini', {
   reasoningEffort: 'medium',
   structuredOutputs: true,
 });
 
-const deepSeekR1Model = fireworks
-  ? wrapLanguageModel({
-      model: fireworks(
-        'accounts/fireworks/models/deepseek-r1',
-      ) as LanguageModelV1,
-      middleware: extractReasoningMiddleware({ tagName: 'think' }),
-    })
-  : undefined;
+const deepSeekR1Model = wrapLanguageModel({
+  model: customModel as LanguageModelV1,
+  middleware: extractReasoningMiddleware({ tagName: 'think' }),
+})
 
 export function getModel(): LanguageModelV1 {
   if (customModel) {
