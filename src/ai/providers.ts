@@ -11,7 +11,6 @@ import { RecursiveCharacterTextSplitter } from './text-splitter';
 
 const FEEDBACK_MODEL = 'gpt-4.1';
 
-
 // Providers
 const openai = process.env.OPENAI_KEY
   ? createOpenAI({
@@ -33,6 +32,7 @@ const fireworks = process.env.FIREWORKS_KEY
 
 const customModel = process.env.CUSTOM_MODEL
   ? openai?.(process.env.CUSTOM_MODEL, {
+    reasoningEffort: 'medium',
     structuredOutputs: false,
   })
   : undefined;

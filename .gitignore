@@ -2,8 +2,7 @@
 
 # Output files
 output.md
-report.md
-answer.md
+reports/*
 
 # Dependencies
 node_modules
@@ -31,7 +30,6 @@ coverage
 out/
 build
 dist
-
 
 # Debug
 npm-debug.log*

@@ -2,9 +2,9 @@ import { generateObject } from 'ai';
 import { z } from 'zod';
 
 import { generateFeedbackModel } from './ai/providers';
-import { systemPrompt } from './prompt';
+import { followUpPrompt, systemPrompt } from './prompts';
 
-export async function generateFeedback({
+export async function generateFollowUps({
   query,
   numQuestions = 3,
 }: {
@@ -14,7 +14,7 @@ export async function generateFeedback({
   const userFeedback = await generateObject({
     model: generateFeedbackModel,
     system: systemPrompt(),
-    prompt: `Given the following query from the user, ask some follow up questions to clarify the research direction. Return a maximum of ${numQuestions} questions, but feel free to return less if the original query is clear: <query>${query}</query>`,
+    prompt: followUpPrompt(query, numQuestions),
     schema: z.object({
       questions: z
         .array(z.string())
