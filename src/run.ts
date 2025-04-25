@@ -9,7 +9,7 @@ import { generateFollowUps } from './follow-ups';
 import { initialPrompt } from './prompts';
 import { askQuestion, convertMarkdownToPdf, rl, writeFinalAnswer, writeFinalReport } from './utils';
 
-const TOPIC = 'TransMedics Group';
+const TOPIC = 'Rheinmetall';
 const BREADTH = 6;
 const DEPTH = 2;
 const IS_REPORT = true;

@@ -7,6 +7,9 @@ import { systemPrompt } from "./prompts";
 import { log } from "./utils";
 
 const SEARCH_LIMIT = 6;
+const NUM_SERP_QUERIES = 4;
+const NUM_LEARNINGS = 4;
+const NUM_FOLLOW_UP_QUESTIONS = 3;
 
 const firecrawl = new FirecrawlApp({
     apiKey: process.env.FIRECRAWL_KEY ?? '',
@@ -25,7 +28,7 @@ export async function search(query: string) {
 // take en user query, return a list of SERP queries
 export async function generateSerpQueries({
     query,
-    numQueries = 3,
+    numQueries = NUM_SERP_QUERIES,
     learnings,
 }: {
     query: string;
@@ -66,8 +69,8 @@ export async function generateSerpQueries({
 export async function processSerpResult({
     query,
     result,
-    numLearnings = 3,
-    numFollowUpQuestions = 3,
+    numLearnings = NUM_LEARNINGS,
+    numFollowUpQuestions = NUM_FOLLOW_UP_QUESTIONS,
 }: {
     query: string;
     result: SearchResponse;
@@ -75,7 +78,7 @@ export async function processSerpResult({
     numFollowUpQuestions?: number;
 }) {
     const contents = compact(result.data.map(item => item.markdown)).map(content =>
-        trimPrompt(content, 25_000),
+        trimPrompt(content, 80_000),
     );
     log(`Ran ${query}, found ${contents.length} contents`);
 

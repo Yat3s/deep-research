@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { convertMarkdownToPdf } from './utils';
+import { convertMarkdownToPdf } from '../utils';
 const markdown = `# Investment Research Report: Rheinmetall AG (RHM.DE)
 
 **Date:** April 24, 2025  
@@ -336,17 +336,17 @@ Rheinmetall stands at the epicenter of a major rearmament cycle with deep backlo
 - https://english.news.cn/20250225/b6b106143fe34fc8852be613260eb860/c.html`;
 
 async function testPdfConversion() {
-    const reportDir = path.resolve(process.cwd(), 'reports');
-    await fs.ensureDir(reportDir);
+  const reportDir = path.resolve(process.cwd(), 'reports');
+  await fs.ensureDir(reportDir);
 
-    const outputPath = path.join(reportDir, 'test-report.pdf');
+  const outputPath = path.join(reportDir, 'test-report.pdf');
 
-    try {
-        const pdfPath = await convertMarkdownToPdf(markdown, outputPath);
-        console.log(`PDF 生成成功，文件路径: ${pdfPath}`);
-    } catch (error) {
-        console.error('PDF 生成失败:', error);
-    }
+  try {
+    const pdfPath = await convertMarkdownToPdf(markdown, outputPath);
+    console.log(`PDF 生成成功，文件路径: ${pdfPath}`);
+  } catch (error) {
+    console.error('PDF 生成失败:', error);
+  }
 }
 
 testPdfConversion(); 

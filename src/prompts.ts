@@ -32,7 +32,8 @@ Then, draw on the company’s website, historical annual reports and financial s
 
 Required structure:
 1. **Business Background**  
-   - Plain-language overview of what the company does and why it’s relevant  
+   - Plain-language overview of what the company does and why it’s relevant
+   - Use full paragraphs (100–200 words each) to elaborate in detail—explaining context, causes, and impacts, and providing examples where necessary
 2. **Why Have the Stocks Risen?**  
    - Key drivers of share-price performance over the past year  
 3. **Management & Governance**  
@@ -55,19 +56,45 @@ export const followUpPrompt = (query: string, numQuestions: number) => {
   `;
 };
 
-export const finalReportPrompt = (initialPrompt: string, learnings: string[], numPages: number = 5) => {
+export const finalReportPrompt = (initialPrompt: string, learnings: string[], numPages: number = 8) => {
   const learningsString = learnings
     .map(learning => `<learning>\n${learning}\n</learning>`)
     .join('\n');
 
-  return `Given the following prompt from the user, 
-  write a final report on the topic using the learnings from research. 
-  Make it as as detailed as possible, aim for ${numPages} or more pages, include ALL the learnings from research.
-  <prompt>${initialPrompt}</prompt>
+  // return `Assume you are a buy-side analyst covering the public equity markets.
+  // Your task is to produce an in-depth, rigorously structured investment research report, synthesizing the following research findings into a seamless narrative:
+  // Given the following initial-prompt from the user,
+  // write a final report on the topic using the learnings from research. 
+  // Under Business Background, use full paragraphs (100–200 words each) to elaborate in detail—explaining context, causes, and impacts, and providing examples where necessary
+  // Make it as as detailed as possible, aim for ${numPages} or more pages, include ALL the learnings from research.
+
+  // <initial-prompt>${initialPrompt}</initial-prompt>
+  // Here are all the learnings from previous research:
+  // <learnings>
+  // ${learningsString}
+  // </learnings>
+  // `;
+
+  return `Assume you are a buy-side analyst covering the public equity markets.  
+  Your task is to produce an in-depth, rigorously structured investment research report, synthesizing the following research findings into a seamless narrative:  
+
+  **Report requirements:**
+  - **Length target:** Make it as as detailed as possible, At least ${numPages} pages or more pages.  
+  - **Rich narrative:** Under each major company information related headings(e.g. Business Background or Company overview), use full paragraphs (100–200 words each) to elaborate in detail—explaining context, causes, and impacts, and providing examples where necessary.  
+  - **Deep integration:** Seamlessly incorporate every finding from <learnings> into its corresponding section, and for each finding explain why it matters and how it supports the investment thesis.  
+  - **Precise citations:** Cite every data point, opinion, or quote (e.g., “(Source: Company 2024 annual report)”).  
+  - **Logical flow:** Use appropriate transition sentences to connect sections and ensure a smooth reading experience.  
+  - **Professional objectivity:** Maintain a neutral, professional analytical tone and avoid unsupported subjective judgments.  
+  - **Visualization:** Insert tables where needed to clearly present key data and comparisons.
+  - **Chapter generation:** Leverage both <initial-prompt> and <learnings> to determine and generate the report’s section headings.
+
+  <initial-prompt>${initialPrompt}</initial-prompt>
+
   Here are all the learnings from previous research:
   <learnings>
   ${learningsString}
-  </learnings>`;
+  </learnings>
+  `;
 };
 
 export const finalAnswerPrompt = (initialPrompt: string, learnings: string[]) => {

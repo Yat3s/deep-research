@@ -8,7 +8,8 @@
     "start": "tsx --env-file=.env.local src/run.ts",
     "api": "tsx --env-file=.env.local src/api.ts",
     "docker": "tsx src/run.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:pdf": "tsx --env-file=.env.local src/tests/markdown2pdf.test.ts",
+    "test:followups": "tsx --env-file=.env.local src/tests/generate-follow-ups.test.ts"
   },
   "author": "",
   "license": "ISC",
