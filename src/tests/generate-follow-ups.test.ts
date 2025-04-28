@@ -1,5 +1,5 @@
-import { generateFollowUps } from "../follow-ups";
 import { initialPrompt } from "../prompts";
+import { generateFollowUps } from "../utils";
 
 async function testFollowups() {
     let queryPrompt = initialPrompt("Microsoft");

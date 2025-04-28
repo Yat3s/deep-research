@@ -5,9 +5,8 @@ import { getModel } from './ai/providers';
 import {
   deepResearch,
 } from './deep-research';
-import { generateFollowUps } from './follow-ups';
 import { initialPrompt } from './prompts';
-import { askQuestion, convertMarkdownToPdf, rl, writeFinalAnswer, writeFinalReport } from './utils';
+import { askQuestion, convertMarkdownToPdf, generateFollowUps, rl, writeFinalAnswer, writeFinalReport } from './utils';
 
 const TOPIC = 'Rheinmetall';
 const BREADTH = 6;
