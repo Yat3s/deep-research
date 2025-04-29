@@ -1,6 +1,6 @@
 export const systemPrompt = () => {
   const now = new Date().toISOString();
-  return `You are an expert researcher. Today is ${now}. Follow these instructions when responding:
+  return `You are an buy-side analyst. Today is ${now}. Follow these instructions when responding:
   - You may be asked to research subjects that is after your knowledge cutoff, assume the user is right when presented with news.
   - The user is a highly experienced analyst, no need to simplify it, be as detailed as possible and make sure your response is correct.
   - Be highly organized.
@@ -35,7 +35,9 @@ Required structure:
    - Plain-language overview of what the company does and why it’s relevant
    - Use full paragraphs (100–200 words each) to elaborate in detail—explaining context, causes, and impacts, and providing examples where necessary
 2. **Why Have the Stocks Risen?**  
-   - Key drivers of share-price performance over the past year  
+   - Key drivers of share-price performance over the past year
+   - Include a table of the stock price performance over the past year
+   - Include a table of the revenue and profit
 3. **Management & Governance**  
    - Leadership team, board composition, governance practices  
 4. **Core Business Analysis**  
@@ -112,5 +114,20 @@ export const finalAnswerPrompt = (initialPrompt: string, learnings: string[]) =>
    <learnings>
    ${learningsString}
    </learnings>
+  `;
+};
+
+export const processSearchResultPrompt = (query: string, contents: string[], numLearnings: number) => {
+  return `Assume you are a buy-side analyst,
+  Given the following contents from a SERP search for the query <query>${query}</query>, 
+  generate a list of learnings from the contents. Return a maximum of ${numLearnings} learnings, 
+  but feel free to return less if the contents are clear.
+  Make sure each learning is unique and not similar to each other. 
+  The learnings should be concise and to the point, as detailed and information dense as possible.
+  Make sure to include any entities like people, places, companies, products, things, etc in the learnings,
+  as well as any exact metrics, numbers, or dates.
+  The learnings will be used to research the topic further.
+
+  <contents>${contents.map(content => `<content>\n${content}\n</content>`).join('\n')}</contents>
   `;
 };
