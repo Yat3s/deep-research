@@ -13,7 +13,7 @@ const BREADTH = 6;
 const DEPTH = 2;
 const IS_REPORT = true;
 const NUM_FOLLOW_UPS = 3;
-const REPORT_PAGES = 8;
+const REPORT_PAGES = 16;
 
 // run the agent
 async function run() {

@@ -8,7 +8,7 @@ import { log } from "./utils";
 
 const SEARCH_LIMIT = 6;
 const NUM_SERP_QUERIES = 4;
-const NUM_LEARNINGS = 4;
+const NUM_LEARNINGS = 6;
 const NUM_FOLLOW_UP_QUESTIONS = 3;
 
 const firecrawl = new FirecrawlApp({
@@ -78,7 +78,7 @@ export async function processSerpResult({
     numFollowUpQuestions?: number;
 }) {
     const contents = compact(result.data.map(item => item.markdown)).map(content =>
-        trimPrompt(content, 80_000),
+        trimPrompt(content, 160_000),
     );
     log(`Ran ${query}, found ${contents.length} contents`);
 
@@ -86,7 +86,7 @@ export async function processSerpResult({
         model: getModel(),
         abortSignal: AbortSignal.timeout(60_000),
         system: systemPrompt(),
-        prompt: trimPrompt(processSearchResultPrompt(query, contents, numLearnings), 80_000),
+        prompt: trimPrompt(processSearchResultPrompt(query, contents, numLearnings), 180_000),
         schema: z.object({
             learnings: z.array(z.string()).describe(`List of learnings, max of ${numLearnings}`),
             followUpQuestions: z

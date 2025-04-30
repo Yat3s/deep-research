@@ -7,6 +7,7 @@ import {
 } from 'ai';
 import { getEncoding } from 'js-tiktoken';
 
+import { log } from '../utils';
 import { RecursiveCharacterTextSplitter } from './text-splitter';
 
 const FEEDBACK_MODEL = 'gpt-4.1';
@@ -78,6 +79,8 @@ export function trimPrompt(
   if (length <= contextSize) {
     return prompt;
   }
+
+  log(`trimPrompt: ${length}, contextSize: ${contextSize}`);
 
   const overflowTokens = length - contextSize;
   // on average it's 3 characters per token, so multiply by 3 to get a rough estimate of the number of characters

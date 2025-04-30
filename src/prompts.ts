@@ -38,14 +38,14 @@ Required structure:
    - Key drivers of share-price performance over the past year
    - Include a table of the stock price performance over the past year
    - Include a table of the revenue and profit
-3. **Management & Governance**  
-   - Leadership team, board composition, governance practices  
-4. **Core Business Analysis**  
+3. **Core Business Analysis**  
    - Detailed breakdown of products/services, revenue streams, and strategy  
-5. **Competitive Landscape & Industry Overview**  
+4. **Competitive Landscape & Industry Overview**  
    - Main competitors, market share, industry trends and risks  
-6. **Financial Performance Analysis**  
-   - Revenue growth, profit margins, balance sheet health, cash flow  
+5. **Financial Performance Analysis**  
+   - Revenue growth, profit margins, balance sheet health, cash flow
+6. **Management & Governance**  
+   - Leadership team, board composition, governance practices   
 7. **Investment Thesis & Risks**  
    - Why this stock could outperform/underperform, key upside/downside factors
 `;
@@ -123,7 +123,7 @@ export const processSearchResultPrompt = (query: string, contents: string[], num
   generate a list of learnings from the contents. Return a maximum of ${numLearnings} learnings, 
   but feel free to return less if the contents are clear.
   Make sure each learning is unique and not similar to each other. 
-  The learnings should be concise and to the point, as detailed and information dense as possible.
+  The learnings should to the point, as detailed and information dense as possible.
   Make sure to include any entities like people, places, companies, products, things, etc in the learnings,
   as well as any exact metrics, numbers, or dates.
   The learnings will be used to research the topic further.
